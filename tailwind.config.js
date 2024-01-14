@@ -8,6 +8,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        Josefin: ["Josefin Slab", "serif"],
+        sacramento: ["Sacramento", "cursive"],
+      },
       backgroundImage: {
         hero: "url('/public/bg3.jpg')",
       },
