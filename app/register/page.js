@@ -3,10 +3,9 @@
 import Button from "@/components/Button";
 import LoginNow from "@/components/LoginNow";
 import ParentDiv from "@/components/ParentDiv";
-import RegisterNow from "@/components/RegisterNow";
 import React from "react";
 
-const Login = () => {
+const Register = () => {
   const handleSubmit = () => {
     console.log("SUBMIT");
   };
@@ -14,7 +13,7 @@ const Login = () => {
   return (
     <ParentDiv>
       {/** Heading */}
-      <div className="px-2 py-0">
+      <div className="px-2 pt-2">
         <h1 className="text-5xl md:text-6xl lg:text-7xl text-gray-700">
           Register
         </h1>
@@ -63,4 +62,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
