@@ -3,10 +3,32 @@
 import Button from "@/components/Button";
 import LoginNow from "@/components/LoginNow";
 import ParentDiv from "@/components/ParentDiv";
-import React from "react";
+import React, { useState } from "react";
 
 const Register = () => {
-  const handleSubmit = () => {
+  const [emailError, setEmailError] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!username || !email || !password) {
+      alert("Fields cannot be empty");
+      return;
+    }
+
+    try {
+      await fetch("api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+    } catch (error) {}
+
     console.log("SUBMIT");
   };
 
@@ -28,6 +50,8 @@ const Register = () => {
               id="username"
               placeholder="Username"
               className="input"
+              value={username || ""}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           {/** Email Input */}
@@ -37,7 +61,12 @@ const Register = () => {
               id="email"
               placeholder="Email"
               className="input"
+              value={email || ""}
+              onChange={(e) => setEmail(e.target.value)}
             />
+            {emailError && (
+              <span className="bg-red-100 p-1 text-red-700">{emailError}</span>
+            )}
           </div>
           {/** Password Input */}
           <div className="flex flex-col space-y-1">
@@ -47,6 +76,8 @@ const Register = () => {
                 id="password"
                 placeholder="Password"
                 className="input"
+                value={password || ""}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>

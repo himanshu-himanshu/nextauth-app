@@ -28,7 +28,7 @@ export default function Home() {
             Signup
           </Link>
           <Link
-            href="/register"
+            href="/login"
             className=" bg-sky-500 px-6 py-3 font-semibold text-[26px] text-white tracking-wider hover:cursor-pointer md:hover:bg-sky-700 md:hover:shadow-xl duration-200 hover:-translate-y-1"
           >
             Login
