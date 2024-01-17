@@ -20,16 +20,26 @@ const Register = () => {
     }
 
     try {
-      await fetch("api/register", {
+      const res = await fetch("api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ username, email, password }),
       });
-    } catch (error) {}
 
-    console.log("SUBMIT");
+      console.log("RESPONSE", res);
+
+      if (res.ok) {
+        setUsername("");
+        setEmail("");
+        setPassword("");
+      } else {
+        console.log("Registration failed");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
 
   return (
