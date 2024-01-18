@@ -1,7 +1,14 @@
 import mongoose, { Schema, models } from "mongoose";
 
+/**
+ * -----------------------------------------------
+ * User Model
+ * -----------------------------------------------
+ */
+
 const userSchema = new Schema(
   {
+    _id: Schema.Types.ObjectId,
     username: {
       type: String,
       required: true,
@@ -9,6 +16,9 @@ const userSchema = new Schema(
     email: {
       type: String,
       required: true,
+      lowercase: true,
+      trim: true,
+      unique: true,
     },
     password: {
       type: String,

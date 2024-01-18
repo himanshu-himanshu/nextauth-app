@@ -1,17 +1,30 @@
 "use client";
 
+/** Global Imports */
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+
+/** Local Imports */
 import Button from "@/components/Button";
 import LoginNow from "@/components/LoginNow";
 import ParentDiv from "@/components/ParentDiv";
-import React, { useState } from "react";
 
 const Register = () => {
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const router = useRouter();
+
+  /**
+   * -----------------------------------------------
+   * Handle Registration Function below
+   * -----------------------------------------------
+   */
+
+  const handleRegistration = async (e) => {
     e.preventDefault();
 
     if (!username || !email || !password) {
@@ -20,6 +33,23 @@ const Register = () => {
     }
 
     try {
+      // Check if Email already exists in the database or not
+      const resUserExists = await fetch("api/userExists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const { user } = await resUserExists.json();
+
+      if (user) {
+        setEmailError("Email already registered");
+        return;
+      }
+
+      // Send API request for registering user into database if not already
       const res = await fetch("api/register", {
         method: "POST",
         headers: {
@@ -28,12 +58,13 @@ const Register = () => {
         body: JSON.stringify({ username, email, password }),
       });
 
-      console.log("RESPONSE", res);
-
       if (res.ok) {
         setUsername("");
         setEmail("");
         setPassword("");
+        setEmailError("");
+        setPasswordError("");
+        router.push("/login");
       } else {
         console.log("Registration failed");
       }
@@ -52,7 +83,7 @@ const Register = () => {
       </div>
       {/** Inputs Container */}
       <div className="w-full px-10 md:px-14 lg:px-16 py-4 md:py-6 lg:py-10">
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
+        <form onSubmit={handleRegistration} className="flex flex-col space-y-6">
           {/** Username Input */}
           <div className="flex flex-col space-y-1">
             <input
@@ -64,6 +95,7 @@ const Register = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
+
           {/** Email Input */}
           <div className="flex flex-col space-y-1">
             <input
@@ -78,6 +110,7 @@ const Register = () => {
               <span className="bg-red-100 p-1 text-red-700">{emailError}</span>
             )}
           </div>
+
           {/** Password Input */}
           <div className="flex flex-col space-y-1">
             <div className="form-div">
