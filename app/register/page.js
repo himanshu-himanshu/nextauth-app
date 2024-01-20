@@ -32,6 +32,8 @@ const Register = () => {
       return;
     }
 
+    //TODO: Add Yup and Formik libraries for validation
+
     try {
       // Check if Email already exists in the database or not
       const resUserExists = await fetch("api/userExists", {
@@ -95,7 +97,6 @@ const Register = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-
           {/** Email Input */}
           <div className="flex flex-col space-y-1">
             <input
@@ -110,7 +111,6 @@ const Register = () => {
               <span className="bg-red-100 p-1 text-red-700">{emailError}</span>
             )}
           </div>
-
           {/** Password Input */}
           <div className="flex flex-col space-y-1">
             <div className="form-div">
@@ -124,10 +124,9 @@ const Register = () => {
               />
             </div>
           </div>
-
+          //TODO: Add Spinner while registering
           {/** Login/Sign Up Button */}
           <Button title="Register" />
-
           {/** Login Container */}
           <LoginNow />
         </form>
