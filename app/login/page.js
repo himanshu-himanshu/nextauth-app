@@ -21,7 +21,26 @@ const Login = () => {
         password,
         redirect: false,
       });
-    } catch (error) {}
+
+      console.log(res);
+
+      if (res.ok) {
+        console.log("Login Successful");
+        return;
+      }
+
+      if (res.error === "⚠ Email not registered") {
+        setEmailError(res.error);
+        return;
+      }
+
+      if (res.error === "⚠ Incorrect password") {
+        setPasswordError(res.error);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -46,26 +65,26 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
             />
             {emailError && (
-              <span className="bg-red-100 p-1 text-red-700">{emailError}</span>
+              <span className="bg-red-100 p-1 text-red-700 mt-1">
+                {emailError}
+              </span>
             )}
           </div>
           {/** Password Input */}
           <div className="flex flex-col space-y-1">
-            <div className="form-div">
-              <input
-                type="password"
-                id="password"
-                placeholder="Password"
-                className="input"
-                value={password || ""}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              {passwordError && (
-                <span className="bg-red-100 p-1 text-red-700">
-                  {passwordError}
-                </span>
-              )}
-            </div>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              className="input"
+              value={password || ""}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {passwordError && (
+              <span className="bg-red-100 p-1 text-red-700 mt-1">
+                {passwordError}
+              </span>
+            )}
           </div>
 
           {/** Login/Sign Up Button */}

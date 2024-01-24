@@ -32,8 +32,6 @@ const Register = () => {
       return;
     }
 
-    //TODO: Add Yup and Formik libraries for validation
-
     try {
       // Check if Email already exists in the database or not
       const resUserExists = await fetch("api/userExists", {
@@ -49,6 +47,8 @@ const Register = () => {
       if (user) {
         setEmailError("Email already registered");
         return;
+      } else {
+        setEmailError("");
       }
 
       // Send API request for registering user into database if not already
@@ -68,6 +68,7 @@ const Register = () => {
         setPasswordError("");
         router.push("/login");
       } else {
+        console.log(res);
         console.log("Registration failed");
       }
     } catch (error) {
@@ -124,7 +125,6 @@ const Register = () => {
               />
             </div>
           </div>
-          //TODO: Add Spinner while registering
           {/** Login/Sign Up Button */}
           <Button title="Register" />
           {/** Login Container */}
